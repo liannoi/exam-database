@@ -1,3 +1,17 @@
+-- Copyright 2019 Maksym Liannoi
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--    http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+
 USE master;
 GO
 
@@ -40,7 +54,7 @@ CREATE TABLE dbo.Products
     CONSTRAINT CHK_Products_Name CHECK (DATALENGTH(Name) > 2),
     CONSTRAINT CHK_Products_ProductNumber CHECK (DATALENGTH(ProductNumber) > 2),
     CONSTRAINT UNQ_Products_Name UNIQUE (Name),
-	CONSTRAINT UNQ_Products_ProductNumber UNIQUE (ProductNumber)
+    CONSTRAINT UNQ_Products_ProductNumber UNIQUE (ProductNumber)
 );
 GO
 
@@ -154,31 +168,31 @@ CREATE TABLE dbo.Photos
 GO
 
 IF (OBJECT_ID('dbo.Categories', 'U') IS NOT NULL)
-DROP TABLE dbo.Categories;
+    DROP TABLE dbo.Categories;
 GO
 
 CREATE TABLE dbo.Categories
 (
-CategoryId INT NOT NULL IDENTITY,
-Name NVARCHAR(64) NOT NULL,
-CONSTRAINT PK_Categories PRIMARY KEY(CategoryId),
-CONSTRAINT UNQ_Categories_Name UNIQUE(Name)
+    CategoryId INT          NOT NULL IDENTITY,
+    Name       NVARCHAR(64) NOT NULL,
+    CONSTRAINT PK_Categories PRIMARY KEY (CategoryId),
+    CONSTRAINT UNQ_Categories_Name UNIQUE (Name)
 );
 GO
 
-IF (OBJECT_ID('dbo.ProductCategories','U') IS NOT NULL)
-DROP TABLE dbo.ProductCateogories;
+IF (OBJECT_ID('dbo.ProductCategories', 'U') IS NOT NULL)
+    DROP TABLE dbo.ProductCateogories;
 GO
 
 CREATE TABLE dbo.ProductCategories
 (
-ProductId INT NOT NULL,
-CategoryId INT NOT NULL,
-CONSTRAINT PK_ProductCategories PRIMARY KEY(ProductId, CategoryId),
-CONSTRAINT FK_ProductCategories_ProductId FOREIGN KEY(ProductId)
-REFERENCES dbo.Products(ProductId),
-CONSTRAINT FK_ProductCategories_CategoryId FOREIGN KEY(CategoryId)
-REFERENCES dbo.Categories(CategoryId)
+    ProductId  INT NOT NULL,
+    CategoryId INT NOT NULL,
+    CONSTRAINT PK_ProductCategories PRIMARY KEY (ProductId, CategoryId),
+    CONSTRAINT FK_ProductCategories_ProductId FOREIGN KEY (ProductId)
+        REFERENCES dbo.Products (ProductId),
+    CONSTRAINT FK_ProductCategories_CategoryId FOREIGN KEY (CategoryId)
+        REFERENCES dbo.Categories (CategoryId)
 );
 GO
 
@@ -187,7 +201,7 @@ SET NOCOUNT ON;
 INSERT INTO dbo.Categories (Name)
 VALUES (N'Smartphones'),
        (N'Notebooks'),
-	   (N'Fridges');
+       (N'Fridges');
 
 INSERT INTO dbo.Manufacturies (Name)
 VALUES ('Npath');
@@ -700,7 +714,7 @@ VALUES ( 3
 INSERT INTO dbo.ProductCategories (ProductId, CategoryId)
 VALUES (1, 1),
        (2, 2),
-	   (3, 3);
+       (3, 3);
 
 SET NOCOUNT OFF;
 GO
